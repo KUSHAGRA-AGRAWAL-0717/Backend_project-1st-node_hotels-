@@ -46,7 +46,10 @@
 const mongoose = require("mongoose");
 const express = require("express");
 
-const mongoUrl = "mongodb://localhost:27017/hotels";
+require("dotenv").config();
+
+// const mongoUrl = process.env.mongoDB_URL_local;    //this is an url which connect to local database
+const mongoUrl = process.env.mongoDB_URL; //and this url is connect to the online database or you can say that connect to the cluster
 
 mongoose.connect(mongoUrl, {});
 
@@ -65,15 +68,15 @@ db.on("disconnected", () => {
 });
 
 // Handle process termination (SIGINT signal)
-process.on('SIGINT', async () => {
+process.on("SIGINT", async () => {
   try {
     await mongoose.disconnect();
-    console.log('MongoDB connection closed due to application termination');
+    console.log("MongoDB connection closed due to application termination");
     process.exit(0);
   } catch (err) {
-    console.error('Error closing MongoDB connection:', err);
+    console.error("Error closing MongoDB connection:", err);
     process.exit(1);
   }
 });
 
-module.exports=db
+module.exports = db;

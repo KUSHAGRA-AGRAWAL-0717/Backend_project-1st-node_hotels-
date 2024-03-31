@@ -138,12 +138,15 @@ const express = require("express");
 const app = express();
 const db = require("./db");
 
+
+
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 
+const MenuItem = require("./models/MenuItem");
+const Person = require("./models/Person");
 
-const MenuItem=require("./models/MenuItem");
-const Person=require("./models/Person");
+const PORT=process.env.PORT || 3000
 
 app.get("/", function (req, res) {
   res.send("welcome to the world of the coding");
@@ -231,12 +234,13 @@ app.get("/", function (req, res) {
 // })
 
 //import the router files
-const personRoutes=require('./routes/personRoutes')
-app.use('/person',personRoutes)
+const personRoutes = require("./routes/personRoutes");
+app.use("/person", personRoutes);
 
-const menuItem=require('./routes/menuItemRoutes')
-app.use('/menu',menuItem)
+const menuItem = require("./routes/menuItemRoutes");
+app.use("/menu", menuItem);
 
-app.listen(3000, () => {
+
+app.listen(PORT, () => {
   console.log("listening the port 3000");
-}); 
+});
